@@ -54,3 +54,19 @@ OPENSSL_CONF=/opt/bitnami/common/openssl/openssl.cnf
 export OPENSSL_CONF
 OPENSSL_ENGINES=/opt/bitnami/common/lib/engines
 export OPENSSL_ENGINES
+
+##### AWS ENV #####
+
+ENDPOINT=http://169.254.169.254/latest/meta-data/iam/security-credentials/InstanceRole_cntatr-app-6dc8e3c688d3e561;
+KEYS=$(curl -s $ENDPOINT`curl -s $ENDPOINT`);
+
+# Fill in ILAB env vars
+ILAB_AWS_S3_ACCESS_KEY=$(echo $KEYS | jq ".AccessKeyId");
+ILAB_AWS_S3_ACCESS_SECRET=$(echo $KEYS | jq ".SecretAccessKey");
+ILAB_AWS_S3_BUCKET=cnt-atr-image-715824975366-bd0c034ea39274d0
+ILAB_AWS_S3_REGION=ap-southeast-1
+
+export ILAB_AWS_S3_ACCESS_KEY
+export ILAB_AWS_S3_ACCESS_SECRET
+export ILAB_AWS_S3_BUCKET
+export ILAB_AWS_S3_REGION
